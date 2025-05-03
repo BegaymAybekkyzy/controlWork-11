@@ -97,7 +97,7 @@ itemsRouter.delete("/:id", authentication, async (req, res, next) => {
         res.send({message: "Item deleted successfully."});
     } catch (err) {
         if (err instanceof Error.CastError) {
-            res.status(400).send(err);
+            res.status(403).send(err);
             return;
         }
         next(err);

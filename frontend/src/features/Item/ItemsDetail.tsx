@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../app/hooks.ts";
 import {deleteItem, fetchByIdItem} from "./itemsThunks.ts";
-import {selectDetailItem, selectItemError, selectItemFetchingLoading} from "./itemsSlice.ts";
+import {selectDetailItem, selectItemDeletionLoading, selectItemFetchingLoading} from "./itemsSlice.ts";
 import Loader from "../../components/UI/Loader/Loader.tsx";
 import {BASE_URL} from "../../constants.ts";
 import {Box, Button, Grid, Typography} from "@mui/material";
@@ -13,8 +13,10 @@ const ItemsDetail = () => {
     const dispatch = useAppDispatch();
     const item = useAppSelector(selectDetailItem);
     const loading = useAppSelector(selectItemFetchingLoading);
+    const deletionLoading = useAppSelector(selectItemDeletionLoading);
     const user = useAppSelector(selectUser);
-    const [nonOwner, setNonOwner] = useState(false)
+    const [nonOwner, setNonOwner] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (!id) return;
@@ -23,6 +25,11 @@ const ItemsDetail = () => {
 
 
     let content: React.ReactNode;
+
+    if (!item || !user) content = (
+        <Typography color="error" variant="h3">There was an error</Typography>
+    );
+
 
     const onDeleteItem = async () => {
         if (user && item && item.user._id !== user._id) {
@@ -33,9 +40,8 @@ const ItemsDetail = () => {
         const warning = confirm("Are you sure you want to delete this item?");
         if (!warning) return;
         dispatch(deleteItem(item._id));
+        navigate("/");
     }
-
-    if (!item) return;
 
     if (loading) {
         content = (
@@ -51,11 +57,11 @@ const ItemsDetail = () => {
     if (item) {
         content = (
             <Box p={4}>
-                <Typography variant="h4" gutterBottom>
+                <Typography variant="h4" sx={{color: "#00695c"}} marginBottom={2}>
                     {item.title}
                 </Typography>
-                <Grid container spacing={4}>
-                    <Grid size={3}>
+                <Grid container spacing={5}>
+                    <Grid size={4}>
                         <img
                             src={BASE_URL + item.image}
                             alt={item.title}
@@ -63,41 +69,43 @@ const ItemsDetail = () => {
                         />
                     </Grid>
 
-                    <Grid size={5}>
-
-                        <Grid container spacing={2}>
+                    <Grid size={5} marginY="auto">
+                        <Grid container spacing={2} alignItems="center">
                             <Grid size={6}>
-                                <Typography variant="h6">Description</Typography>
-                                <Typography>{item.description}</Typography>
-                            </Grid>
-                            <Grid size={6}>
-                                <Typography variant="h6">Price</Typography>
+                                <Typography variant="h5" sx={{color: "#00695c"}}>Price</Typography>
                                 <Typography>{item.price} KGS</Typography>
                             </Grid>
 
                             <Grid size={6}>
-                                <Typography variant="h6">Category</Typography>
+                                <Typography variant="h5" sx={{color: "#00695c"}}>Category</Typography>
                                 <Typography>{item.category.title}</Typography>
                             </Grid>
-                            <Grid size={6}>
-                                <Typography variant="h6">Seller</Typography>
-                                <Typography>{item.user.displayName}</Typography>
-                                <Typography>{item.user.phone}</Typography>
+                            <Grid size={12}>
+                                <Typography variant="h5" sx={{color: "#00695c"}}>Seller</Typography>
+                                <Typography>Name: <b>{item.user.displayName}</b>
+                                </Typography>
+                                <Typography>Phone: <b>{item.user.phone}</b></Typography>
                             </Grid>
                         </Grid>
+                        <hr/>
+                        <Grid size={12}>
+                            <Typography variant="h5" sx={{color: "#00695c"}}>Description</Typography>
+                            <Typography>{item.description}</Typography>
+                        </Grid>
 
-                        {user && (
+                        {item.user._id === user._id && (
                             <Box mt={3}>
                                 <Button
                                     variant="contained"
-                                    sx={{backgroundColor: "#5F9EA0"}}
+                                    sx={{backgroundColor: "#37474f"}}
                                     onClick={onDeleteItem}
-                                >Sold
+                                    disabled={deletionLoading}
+                                >Remove item
                                 </Button>
 
                                 {nonOwner &&
                                     <Typography
-                                        color="secondary"
+                                        color="error"
                                         marginTop={4}
                                     >You can't remove an item if you don't own it</Typography>}
                             </Box>
@@ -109,9 +117,9 @@ const ItemsDetail = () => {
     }
 
     return (
-        <div>
+        <main>
             {content}
-        </div>
+        </main>
     );
 };
 

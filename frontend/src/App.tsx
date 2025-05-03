@@ -18,7 +18,7 @@ const App = () => {
             <header>
                 <AppToolbar/>
             </header>
-            <Container>
+            <Container style={{marginBottom: 70}}>
                 <Routes>
                     <Route path="/" element={<ItemsList/>}/>
                     <Route path="/registration" element={<Registration/>}/>

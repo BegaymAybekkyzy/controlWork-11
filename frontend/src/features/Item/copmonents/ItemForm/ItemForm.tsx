@@ -121,13 +121,15 @@ const ItemForm: React.FC<Props> = ({categories}) => {
                                     <MenuItem key={category._id} value={category._id}>{category.title}</MenuItem>
                                 ))}
                             </Select>
-                            <FormHelperText>{getErrors("category")}</FormHelperText>
+                            <FormHelperText sx={{color: "red"}}>{getErrors("category")}</FormHelperText>
                         </Grid>
 
                         <Grid size={9}>
                             <TextField
                                 fullWidth
                                 label="Description"
+                                multiline
+                                rows={4}
                                 disabled={loading}
                                 helperText={getErrors("description")}
                                 error={Boolean(getErrors("description"))}
@@ -165,7 +167,7 @@ const ItemForm: React.FC<Props> = ({categories}) => {
                                 type="submit"
                                 color="primary"
                                 disabled={loading}
-                            >Add</Button>
+                            >Create item</Button>
                         </Grid>
                     </Grid>
                 </form>

@@ -29,8 +29,6 @@ export const selectItemCreationLoading = (state: RootState) => state.items.creat
 export const selectItemDeletionLoading = (state: RootState) => state.items.deletionLoading;
 export const selectItemError = (state: RootState) => state.items.error;
 
-console.log("Creating itemsSlice...");
-
 const itemsSlice = createSlice({
     name: "items",
     initialState,
