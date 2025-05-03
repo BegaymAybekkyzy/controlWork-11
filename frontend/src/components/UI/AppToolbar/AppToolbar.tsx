@@ -3,6 +3,7 @@ import {NavLink, useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../../app/hooks.ts";
 import {systemLogout, selectUser} from "../../../features/User/userSlice.ts";
 import {Nav} from "react-bootstrap";
+import {logout} from "../../../features/User/userThunks.ts";
 
 const AppToolbar = () => {
     const user = useAppSelector(selectUser);
@@ -14,6 +15,7 @@ const AppToolbar = () => {
         const warning = confirm("Do you really want to log out?");
         if (!warning) return;
         dispatch(systemLogout());
+        dispatch(logout());
         navigate("/");
     }
 

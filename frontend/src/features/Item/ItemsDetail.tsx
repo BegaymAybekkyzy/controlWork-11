@@ -21,7 +21,7 @@ const ItemsDetail = () => {
     useEffect(() => {
         if (!id) return;
         dispatch(fetchByIdItem(id));
-    }, [dispatch, id]);
+    }, [dispatch, id, user]);
 
 
     let content: React.ReactNode;
