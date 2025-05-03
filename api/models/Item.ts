@@ -8,8 +8,8 @@ const ItemSchema = new mongoose.Schema({
         ref: "User",
         required: true,
         validate: {
-            validator: (docId: string) => {
-                const user = User.findById(docId);
+            validator: async (docId: string) => {
+                const user = await User.findById(docId);
                 return !!user;
             },
             message: "User not found",
@@ -20,8 +20,8 @@ const ItemSchema = new mongoose.Schema({
         ref: "Category",
         required: true,
         validate: {
-            validator: (docId: string) => {
-                const category = Category.findById(docId);
+            validator: async (docId: string) => {
+                const category = await Category.findById(docId);
                 return !!category;
             },
             message: "Category not found",
