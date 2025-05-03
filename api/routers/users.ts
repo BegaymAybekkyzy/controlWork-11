@@ -6,9 +6,24 @@ const usersRouter = express.Router();
 
 usersRouter.post("/", async (req, res, next) => {
     try {
+        const existingUser = await User.findOne({username: req.body.username});
+        const existingNumber = await User.findOne({phone: req.body.phone});
+
+        if (existingUser) {
+            res.status(400).send({error: `The user '${req.body.username}' already exists`});
+            return;
+        }
+
+        if (existingNumber) {
+            res.status(400).send({error: `The phone '${req.body.phone}' already exists`});
+            return;
+        }
+
         const user = new User({
             username: req.body.username,
             password: req.body.password,
+            displayName: req.body.displayName,
+            phone: req.body.phone,
         });
 
         user.generateToken();

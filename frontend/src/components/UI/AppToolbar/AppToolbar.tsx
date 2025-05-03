@@ -1,29 +1,19 @@
-import {AppBar, Grid, Toolbar, Button, Box, Menu, MenuItem} from "@mui/material";
+import {AppBar, Grid, Toolbar, Box, Typography} from "@mui/material";
 import {NavLink, useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../../app/hooks.ts";
 import {systemLogout, selectUser} from "../../../features/User/userSlice.ts";
-import PersonIcon from '@mui/icons-material/Person';
-import React, {useState} from "react";
+import {Nav} from "react-bootstrap";
 
 const AppToolbar = () => {
     const user = useAppSelector(selectUser);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const [userEl, setUserEl] = useState<null | HTMLElement>(null);
-    const open = Boolean(userEl);
-
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        setUserEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setUserEl(null);
-    };
 
     const onLogout = () => {
+        const warning = confirm("Do you really want to log out?");
+        if (!warning) return;
         dispatch(systemLogout());
-        setUserEl(null);
         navigate("/");
     }
 
@@ -31,34 +21,45 @@ const AppToolbar = () => {
         <AppBar position="static" sx={{backgroundColor: "#5F9EA0", marginBottom: "50px"}}>
             <Toolbar sx={{display: "flex", justifyContent: "space-between"}}>
                 <Grid>
-
+                    <Typography variant="h6">
+                        <NavLink style={{color: "white", textDecoration: "none"}} to="/">
+                            <div style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+                                {/*<ForumIcon sx={{*/}
+                                {/*    display: "block",*/}
+                                {/*    marginRight: "10px",*/}
+                                {/*    fontSize: "30px",*/}
+                                {/*}}/>*/}
+                                <span className="d-block">Flea market</span>
+                            </div>
+                        </NavLink>
+                    </Typography>
                 </Grid>
                 <Grid>
                     {
                         user ? <Box display="flex" alignItems="center">
-                                <span style={{display: "block"}}>{user.username}</span>
-                                <Button sx={{color: "white"}} onClick={handleClick}><PersonIcon/></Button>
-                                <Menu
-                                    id="basic-menu"
-                                    anchorEl={userEl}
-                                    open={open}
-                                    onClose={handleClose}
-                                >
-                                    <MenuItem onClick={onLogout}>Logout</MenuItem>
-                                </Menu>
+                                <span className="d-block me-3">Hello, <b>{user.username}!</b></span>
+                                <NavLink
+                                    className="nav-item text-white"
+                                    to="/add-new-item"
+                                >Add new item</NavLink>
+                                <span className="mx-2">or</span>
+                                <NavLink
+                                    className="nav-item text-white"
+                                    to="/"
+                                    onClick={onLogout}
+                                >Logout</NavLink>
                             </Box>
-                            : <>
-                                <Button
-                                    sx={{color: "white"}}
-                                    component={NavLink}
+                            : <Nav>
+                                <NavLink
+                                    className="nav-item text-white"
                                     to="/registration"
-                                >Registration</Button>
-                                <Button
-                                    sx={{color: "white"}}
-                                    component={NavLink}
-                                    to="/authentication"
-                                >Login</Button>
-                            </>
+                                >Registration</NavLink>
+                                <span className="mx-2">or</span>
+                                <NavLink
+                                    className="nav-item text-white"
+                                    to="/login"
+                                >Login</NavLink>
+                            </Nav>
                     }
                 </Grid>
             </Toolbar>

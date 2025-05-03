@@ -28,10 +28,20 @@ const UserSchema = new mongoose.Schema<
     username: {
         type: String,
         required: true,
+        unique: true,
     },
     password: {
         type: String,
         required: true
+    },
+    displayName: {
+        type: String,
+        required: true,
+    },
+    phone: {
+        type: Number,
+        required: true,
+        unique: true,
     },
     token: {
         type: String,

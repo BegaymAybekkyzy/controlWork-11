@@ -7,13 +7,15 @@ import {IUserForm} from "../../types.s.ts";
 import Typography from "@mui/material/Typography";
 import {useNavigate} from "react-router-dom";
 
-const initialValue: IUserForm = {
-    username: "",
-    password: "",
-}
 
 const Registration = () => {
-    const [form, setForm] = useState(initialValue);
+    const [form, setForm] = useState<IUserForm>({
+        username: "",
+        password: "",
+        displayName: "",
+        phone: null
+    });
+
     const dispatch = useAppDispatch();
     const error = useAppSelector(selectRegistrationErrors);
     const loading = useAppSelector(selectRegistrationLoading);
@@ -22,7 +24,6 @@ const Registration = () => {
     const onSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         await dispatch(registration(form)).unwrap();
-        setForm(initialValue);
         navigate("/");
     };
 
@@ -41,6 +42,18 @@ const Registration = () => {
         setForm({ ...form, [name]: value });
     };
 
+    let errorIsUsername: React.ReactNode;
+
+    if (error && "error" in error){
+        errorIsUsername = (
+            <Typography
+                textAlign="center"
+                color="#fa4d4d"
+                marginBottom={4}
+            >{error.error}</Typography>
+        );
+    }
+
     return (
         <div>
             <Typography
@@ -50,6 +63,7 @@ const Registration = () => {
                 marginBottom={5}
             >Register</Typography>
 
+            {errorIsUsername}
             <Box
                 sx={{
                     display: 'flex',
@@ -57,8 +71,8 @@ const Registration = () => {
                     alignItems: 'center',
                 }}>
                 <form onSubmit={onSubmitForm}>
-                    <Grid container spacing={2} marginBottom={3}>
-                        <Grid size={12}>
+                    <Grid container spacing={2} marginBottom={3} justifyContent="center" alignItems="center">
+                        <Grid size={9}>
                             <TextField
                                 fullWidth
                                 label="Name"
@@ -70,10 +84,9 @@ const Registration = () => {
                                 onChange={onChangeInput}
                                 variant="outlined" />
                         </Grid>
-                        <Grid size={12}>
+                        <Grid size={9}>
                             <TextField
                                 fullWidth
-                                id="outlined-basic"
                                 label="Password"
                                 disabled={loading}
                                 helperText={getErrors("password")}
@@ -84,7 +97,33 @@ const Registration = () => {
                                 variant="outlined" />
                         </Grid>
 
-                        <Grid size={12}>
+                        <Grid size={9}>
+                            <TextField
+                                fullWidth
+                                label="displayName"
+                                disabled={loading}
+                                helperText={getErrors("displayName")}
+                                error={Boolean(getErrors("displayName"))}
+                                value={form.displayName}
+                                name="displayName"
+                                onChange={onChangeInput}
+                                variant="outlined" />
+                        </Grid>
+
+                        <Grid size={9}>
+                            <TextField
+                                fullWidth
+                                label="phone"
+                                disabled={loading}
+                                helperText={getErrors("phone")}
+                                error={Boolean(getErrors("phone"))}
+                                value={form.phone}
+                                name="phone"
+                                onChange={onChangeInput}
+                                variant="outlined" />
+                        </Grid>
+
+                        <Grid size={9}>
                             <Button
                                 variant="contained"
                                 sx={{backgroundColor: "#5F9EA0"}}

@@ -1,6 +1,8 @@
 export interface IUserForm {
     username: string;
     password: string;
+    displayName: string;
+    phone: number | null;
 }
 
 export interface IUser {

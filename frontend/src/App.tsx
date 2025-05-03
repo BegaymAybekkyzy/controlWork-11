@@ -15,7 +15,7 @@ const App = () => {
         <Container>
             <Routes>
                 <Route path="/registration" element={<Registration/>} />
-                <Route path="/authentication" element={<Authentication/>} />
+                <Route path="/login" element={<Authentication/>} />
                 <Route path="*" element={<Typography variant={"h2"}>Page not found</Typography>} />
             </Routes>
         </Container>

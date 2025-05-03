@@ -6,7 +6,7 @@ import {registration, authentication} from "./userThunks.ts";
 interface userState {
     user: IUser | null;
     registrationLoading: boolean;
-    registrationErrors: IDetailedError | null;
+    registrationErrors: IDetailedError | IError | null;
     authenticationLoading: boolean;
     authenticationErrors: IError | null;
 }

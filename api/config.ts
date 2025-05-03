@@ -1,3 +1,9 @@
+import path from "node:path";
+
+const rootPath = __dirname;
+
 export const config = {
-    db: "mongodb://localhost/test"
+    rootPath,
+    publicPath: path.join(rootPath, "public"),
+    db: "mongodb://localhost/lalafo"
 }
