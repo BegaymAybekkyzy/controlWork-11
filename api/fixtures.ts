@@ -51,7 +51,7 @@ const run = async () => {
     await Item.create(
         {
             user: user1,
-            title: "Item1",
+            title: "Cloths",
             category: category1,
             description: "Nice cloth",
             image: "images/c6b78833-f4bb-4f4c-baa4-07a83597ab3d.jpg",
@@ -59,7 +59,7 @@ const run = async () => {
         },
         {
             user: user1,
-            title: "Item2",
+            title: "Dress",
             category: category1,
             image: "images/8fc1df08-0835-4f16-818f-52bd73444fb5.jpg",
             description: "Red dress",
@@ -67,7 +67,7 @@ const run = async () => {
         },
         {
             user: user1,
-            title: "Item3",
+            title: "Shoes",
             category: category4,
             description: "men's shoes",
             image: "images/ac7646ef-a20e-40ec-9d79-3bd745c94108.jpg",
@@ -75,7 +75,7 @@ const run = async () => {
         },
         {
             user: user1,
-            title: "Item4",
+            title: "Shoes",
             category: category4,
             image: "images/ea69f616-1c0f-481f-9b71-eaeafa5a67c3.jpeg",
             description: "women's shoes",
@@ -84,34 +84,34 @@ const run = async () => {
 
         {
             user: user2,
-            title: "Item5",
+            title: "Pizza",
             category: category3,
-            description: "Pizza",
+            description: "Pizza peperoni",
             image: "images/fdaf2630-5f04-404b-8545-77e3119f037b.jpg",
             price: "700"
         },
         {
             user: user2,
-            title: "Item6",
+            title: "Bread",
             category: category3,
             image: "images/697c35f8-505c-4839-8ced-bd3a87a6e9fa.jpg",
-            description: "Bread",
+            description: "Bread japan",
             price: "50"
         },
         {
             user: user2,
-            title: "Item7",
+            title: "Rake",
             category: category2,
-            description: "Rake",
+            description: "Garden rake",
             image: "images/fa1e2a3e-7973-419b-8048-b6808d5c3407.jpg",
             price: "70"
         },
         {
             user: user2,
-            title: "Item8",
+            title: "Saw",
             category: category2,
             image: "images/90427a7e-f63b-43df-a44d-5425c3790e99.jpg",
-            description: "Saw",
+            description: "sturdy saw",
             price: "50"
         }
     )

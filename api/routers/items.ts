@@ -48,7 +48,7 @@ itemsRouter.get("/", async (req, res, next) => {
             filter = {category};
         }
 
-        const items = await Item.find(filter).select("title price image");
+        const items = await Item.find(filter).select("title price image category");
 
         res.send(items);
 
@@ -64,10 +64,15 @@ itemsRouter.get("/", async (req, res, next) => {
 itemsRouter.get("/:id", async (req, res, next) => {
     try {
         const {id} = req.params;
-        const items = await Item.findById(id).populate({
-            path: "user",
-            select: "displayName phone"
-        });
+        const items = await Item.findById(id).populate([
+            {
+                path: "user",
+                select: "displayName phone",
+            },
+            {
+                path: "category",
+            },
+        ]);
 
         if (!items) {
             res.status(400).send({error: "Item not Found"});

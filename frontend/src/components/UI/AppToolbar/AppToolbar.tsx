@@ -21,16 +21,9 @@ const AppToolbar = () => {
         <AppBar position="static" sx={{backgroundColor: "#5F9EA0", marginBottom: "50px"}}>
             <Toolbar sx={{display: "flex", justifyContent: "space-between"}}>
                 <Grid>
-                    <Typography variant="h6">
+                    <Typography variant="h5">
                         <NavLink style={{color: "white", textDecoration: "none"}} to="/">
-                            <div style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
-                                {/*<ForumIcon sx={{*/}
-                                {/*    display: "block",*/}
-                                {/*    marginRight: "10px",*/}
-                                {/*    fontSize: "30px",*/}
-                                {/*}}/>*/}
-                                <span className="d-block">Flea market</span>
-                            </div>
+                            Flea market
                         </NavLink>
                     </Typography>
                 </Grid>
